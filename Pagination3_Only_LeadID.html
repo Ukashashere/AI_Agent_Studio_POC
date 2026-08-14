@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Oracle Leads - Lead ID Pagination</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #status {
+            margin-top: 20px;
+            white-space: pre-line;
+            font-family: monospace;
+        }
+
+        .page {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background: #f7f7f7;
+        }
+
+        .page h3 {
+            margin-top: 0;
+        }
+
+        .lead-id {
+            font-family: monospace;
+            margin: 3px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Oracle Leads - Lead ID Pagination</h2>
+
+<label>Username:</label>
+<input type="text" id="username">
+
+<br><br>
+
+<label>Password:</label>
+<input type="password" id="password">
+
+<br><br>
+
+<button onclick="getAllLeadIds()">Get All Lead IDs</button>
+
+<div id="status"></div>
+
+<h2>Lead IDs by API Call</h2>
+
+<div id="results"></div>
+
+
+<script>
+
+async function getAllLeadIds() {
+
+    const BASE_URL =
+        "https://dabiqy.ds-fa.oraclepdemos.com/crmRestApi/resources/11.13.18.05/leads";
+
+    const username =
+        document.getElementById("username").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    const limit = 25;
+
+    let offset = 0;
+
+    let pageNumber = 1;
+
+    let allLeadIds = [];
+
+    const status =
+        document.getElementById("status");
+
+    const results =
+        document.getElementById("results");
+
+    status.innerText =
+        "Starting pagination...\n";
+
+    results.innerHTML = "";
+
+    try {
+
+        while (true) {
+
+            status.innerText +=
+                `Calling API: offset=${offset}, limit=${limit}\n`;
+
+            const params = new URLSearchParams({
+
+                fields: "LeadId",
+
+                onlyData: "true",
+
+                limit: limit,
+
+                offset: offset
+
+            });
+
+            const url =
+                `${BASE_URL}?${params.toString()}`;
+
+            const response =
+                await fetch(url, {
+
+                    method: "GET",
+
+                    headers: {
+
+                        "Accept":
+                            "application/json",
+
+                        "Authorization":
+                            "Basic " +
+                            btoa(username + ":" + password)
+
+                    }
+
+                });
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP Error ${response.status}: ${response.statusText}`
+                );
+
+            }
+
+            const data =
+                await response.json();
+
+            const items =
+                data.items || [];
+
+            const hasMore =
+                data.hasMore === true;
+
+            // Extract ONLY LeadId
+            const leadIds =
+                items
+                    .map(item => item.LeadId)
+                    .filter(id =>
+                        id !== null &&
+                        id !== undefined
+                    );
+
+            // Add to overall collection
+            allLeadIds =
+                allLeadIds.concat(leadIds);
+
+
+            // ==========================================
+            // DISPLAY THIS PAGE IMMEDIATELY
+            // ==========================================
+
+            const pageDiv =
+                document.createElement("div");
+
+            pageDiv.className = "page";
+
+            const title =
+                document.createElement("h3");
+
+            title.innerText =
+                `API Call ${pageNumber} | Offset ${offset} | ${leadIds.length} Lead IDs`;
+
+            pageDiv.appendChild(title);
+
+
+            leadIds.forEach((leadId) => {
+
+                const div =
+                    document.createElement("div");
+
+                div.className = "lead-id";
+
+                div.innerText =
+                    leadId;
+
+                pageDiv.appendChild(div);
+
+            });
+
+
+            results.appendChild(pageDiv);
+
+
+            // ==========================================
+            // UPDATE STATUS
+            // ==========================================
+
+            status.innerText +=
+                `Lead IDs returned: ${leadIds.length}\n`;
+
+            status.innerText +=
+                `Total Lead IDs collected: ${allLeadIds.length}\n`;
+
+            status.innerText +=
+                `hasMore: ${hasMore}\n\n`;
+
+
+            // ==========================================
+            // STOP IF NO MORE RECORDS
+            // ==========================================
+
+            if (!hasMore) {
+
+                break;
+
+            }
+
+
+            // ==========================================
+            // NEXT PAGE
+            // ==========================================
+
+            offset += limit;
+
+            pageNumber++;
+
+        }
+
+
+        // ==============================================
+        // FINAL RESULT
+        // ==============================================
+
+        status.innerText +=
+            "====================================\n";
+
+        status.innerText +=
+            "PAGINATION COMPLETE\n";
+
+        status.innerText +=
+            `Total Lead IDs: ${allLeadIds.length}\n`;
+
+        status.innerText +=
+            "====================================\n";
+
+    }
+
+    catch (error) {
+
+        status.innerText +=
+            `ERROR: ${error.message}`;
+
+        console.error(error);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

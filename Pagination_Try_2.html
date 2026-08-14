@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Oracle Leads Pagination Test</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #status {
+            margin-top: 20px;
+            white-space: pre-line;
+            font-family: monospace;
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Oracle Leads Pagination Test</h2>
+
+<label>Username:</label>
+<input type="text" id="username">
+
+<br><br>
+
+<label>Password:</label>
+<input type="password" id="password">
+
+<br><br>
+
+<button onclick="getAllLeads()">Get All Leads</button>
+
+<div id="status"></div>
+
+<table id="leadsTable">
+    <thead>
+        <tr>
+            <th>Lead Number</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Lead ID</th>
+            <th>Email</th>
+            <th>Rank</th>
+            <th>Product Group</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+
+async function getAllLeads() {
+
+    const BASE_URL =
+        "https://dabiqy.ds-fa.oraclepdemos.com/crmRestApi/resources/11.13.18.05/leads";
+
+    const username =
+        document.getElementById("username").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    const limit = 25;
+
+    let offset = 0;
+
+    let allLeads = [];
+
+    const status =
+        document.getElementById("status");
+
+    status.innerText = "Starting pagination...\n";
+
+    try {
+
+        while (true) {
+
+            status.innerText +=
+                `Calling API: offset=${offset}, limit=${limit}\n`;
+
+            const params = new URLSearchParams({
+
+                fields:
+                    "Name,LeadNumber,StatusCode,LeadId,PrimaryContactEmailAddress,Rank,ProductGroupName",
+
+                onlyData: "true",
+
+                limit: limit,
+
+                offset: offset
+
+            });
+
+            const url =
+                `${BASE_URL}?${params.toString()}`;
+
+            const response = await fetch(url, {
+
+                method: "GET",
+
+                headers: {
+
+                    "Accept":
+                        "application/json",
+
+                    "Authorization":
+                        "Basic " +
+                        btoa(username + ":" + password)
+
+                }
+
+            });
+
+            if (!response.ok) {
+
+                throw new Error(
+                    `HTTP Error ${response.status}: ${response.statusText}`
+                );
+
+            }
+
+            const data =
+                await response.json();
+
+            const items =
+                data.items || [];
+
+            const hasMore =
+                data.hasMore === true;
+
+            allLeads =
+                allLeads.concat(items);
+
+            status.innerText +=
+                `Records received: ${items.length}\n`;
+
+            status.innerText +=
+                `Total collected: ${allLeads.length}\n`;
+
+            status.innerText +=
+                `hasMore: ${hasMore}\n\n`;
+
+            // Stop when Oracle says there are no more records
+            if (!hasMore) {
+
+                break;
+
+            }
+
+            // Move to next page
+            offset += limit;
+
+        }
+
+        status.innerText +=
+            "=================================\n";
+
+        status.innerText +=
+            `PAGINATION COMPLETE\n`;
+
+        status.innerText +=
+            `Total Leads: ${allLeads.length}\n`;
+
+        status.innerText +=
+            "=================================\n";
+
+        displayLeads(allLeads);
+
+    }
+
+    catch (error) {
+
+        status.innerText +=
+            `ERROR: ${error.message}`;
+
+        console.error(error);
+
+    }
+
+}
+
+
+function displayLeads(leads) {
+
+    const tbody =
+        document.querySelector("#leadsTable tbody");
+
+    tbody.innerHTML = "";
+
+    leads.forEach(lead => {
+
+        const row =
+            document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>${lead.LeadNumber || ""}</td>
+
+            <td>${lead.Name || ""}</td>
+
+            <td>${lead.StatusCode || ""}</td>
+
+            <td>${lead.LeadId || ""}</td>
+
+            <td>${lead.PrimaryContactEmailAddress || ""}</td>
+
+            <td>${lead.Rank || ""}</td>
+
+            <td>${lead.ProductGroupName || ""}</td>
+
+        `;
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

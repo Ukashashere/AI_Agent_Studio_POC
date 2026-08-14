@@ -1,0 +1,14 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Open Pagination_Try_2.html",
+            "file": "c:\\Ukasha_Stuff\\AI_Agent_Studio_POC\\Pagination_Try_2.html"
+        }
+    ]
+}
