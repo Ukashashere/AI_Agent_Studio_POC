@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bank - Explore Home Loans</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f6fa;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1f2937;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        .email-wrapper {
+            width: 100%;
+            background-color: #f3f6fa;
+            padding: 30px 0;
+        }
+
+        .email-container {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* HEADER */
+
+        .header {
+            background-color: #ffffff;
+            padding: 24px 35px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            color: #0b3d91;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        /* HERO */
+
+        .hero {
+            background-color: #0b3d91;
+            padding: 45px 35px;
+            text-align: center;
+        }
+
+        .hero-title {
+            color: #ffffff;
+            font-size: 32px;
+            line-height: 1.25;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-text {
+            color: #e6efff;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* CONTENT */
+
+        .content {
+            padding: 35px;
+        }
+
+        .greeting {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        .welcome-title {
+            font-size: 25px;
+            font-weight: 700;
+            color: #0b3d91;
+            margin-bottom: 12px;
+        }
+
+        .paragraph {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 22px;
+        }
+
+        /* INTRO BOX */
+
+        .intro-box {
+            background-color: #eef5ff;
+            border-left: 5px solid #0b3d91;
+            padding: 22px;
+            margin: 25px 0;
+        }
+
+        .intro-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: #0b3d91;
+            margin-bottom: 10px;
+        }
+
+        .intro-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #4b5563;
+            margin: 0;
+        }
+
+        /* PRODUCT CARDS */
+
+        .section-title {
+            text-align: center;
+            color: #0b3d91;
+            font-size: 23px;
+            font-weight: 700;
+            margin: 35px 0 20px 0;
+        }
+
+        .product-card {
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            padding: 22px;
+            margin-bottom: 15px;
+        }
+
+        .product-title {
+            color: #0b3d91;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .product-highlight {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        /* CTA */
+
+        .cta-section {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 28px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .cta-title {
+            color: #0b3d91;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cta-text {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #0b3d91;
+            color: #ffffff !important;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 15px 30px;
+            border-radius: 6px;
+        }
+
+        /* BENEFITS */
+
+        .benefits-title {
+            text-align: center;
+            color: #0b3d91;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 35px 0 20px;
+        }
+
+        .benefit {
+            padding: 9px 0;
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .check {
+            color: #0b3d91;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* CLOSING */
+
+        .closing {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-top: 30px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            background-color: #0f172a;
+            padding: 25px 35px;
+            text-align: center;
+        }
+
+        .footer-brand {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .footer-tagline {
+            color: #cbd5e1;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .disclaimer {
+            color: #94a3b8;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        /* MOBILE */
+
+        @media only screen and (max-width: 600px) {
+
+            .email-wrapper {
+                padding: 0;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .hero {
+                padding: 35px 20px;
+            }
+
+            .hero-title {
+                font-size: 27px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .cta-button {
+                display: block;
+                width: auto;
+                padding: 15px 20px;
+            }
+
+            .footer {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="email-wrapper">
+    <tr>
+        <td align="center">
+
+            <!-- MAIN EMAIL CONTAINER -->
+            <table
+                width="680"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                class="email-container"
+                style="max-width:680px;width:100%;"
+            >
+
+                <!-- HEADER -->
+                <tr>
+                    <td class="header">
+
+                        <div class="logo">
+                            The Bank
+                        </div>
+
+                        <div class="tagline">
+                            Banking made simpler. Dreams made possible.
+                        </div>
+
+                    </td>
+                </tr>
+
+
+                <!-- HERO -->
+                <tr>
+                    <td class="hero">
+
+                        <div class="hero-title">
+                            Welcome to The Bank
+                        </div>
+
+                        <div class="hero-text">
+                            Explore Home Loan solutions designed to help
+                            make your dream of owning a home a reality.
+                        </div>
+
+                    </td>
+                </tr>
+
+
+                <!-- CONTENT -->
+                <tr>
+                    <td class="content">
+
+                        <!-- GREETING -->
+                        <div class="greeting">
+                            Dear Customer,
+                        </div>
+
+
+                        <!-- WELCOME -->
+                        <div class="welcome-title">
+                            Thank You for Exploring Our Home Loans
+                        </div>
+
+                        <p class="paragraph">
+                            We're delighted to be part of your journey toward
+                            finding a home that feels truly yours.
+                            Whether you're purchasing your first home,
+                            building a home on your own plot, or planning
+                            your next property investment, The Bank has solutions
+                            designed to support your aspirations.
+                        </p>
+
+
+                        <!-- INTRODUCTION -->
+                        <div class="intro-box">
+
+                            <div class="intro-title">
+                                Your Dream Home Starts Here
+                            </div>
+
+                            <p class="intro-text">
+                                Discover home loan options that can help you
+                                plan your purchase, construction or residential
+                                plot investment with flexible repayment
+                                options and convenient support.
+                            </p>
+
+                        </div>
+
+
+                        <!-- PRODUCT SECTION -->
+                        <div class="section-title">
+                            Explore Our Home Loan Solutions
+                        </div>
+
+
+                        <!-- HOME PURCHASE LOAN -->
+                        <div class="product-card">
+
+                            <div class="product-title">
+                                🏠 Home Purchase Loan
+                            </div>
+
+                            <p class="product-description">
+                                Finance your dream apartment, villa or
+                                independent residential house with a home
+                                loan solution designed around your needs.
+                            </p>
+
+                            <div class="product-highlight">
+                                ✓ Suitable for new, ready-to-move and
+                                resale residential properties
+                            </div>
+
+                        </div>
+
+
+                        <!-- HOME CONSTRUCTION LOAN -->
+                        <div class="product-card">
+
+                            <div class="product-title">
+                                🏗️ Home Construction Loan
+                            </div>
+
+                            <p class="product-description">
+                                Build your dream home on your own plot with
+                                financing designed to support your construction
+                                journey.
+                            </p>
+
+                            <div class="product-highlight">
+                                ✓ Financing support aligned with construction
+                                requirements
+                            </div>
+
+                        </div>
+
+
+                        <!-- PLOT PURCHASE LOAN -->
+                        <div class="product-card">
+
+                            <div class="product-title">
+                                📍 Plot Purchase Loan
+                            </div>
+
+                            <p class="product-description">
+                                Take the first step toward building your future
+                                by financing the purchase of a residential plot.
+                            </p>
+
+                            <div class="product-highlight">
+                                ✓ Plan your residential plot investment
+                                with a structured repayment option
+                            </div>
+
+                        </div>
+
+
+                        <!-- CTA -->
+                        <div class="cta-section">
+
+                            <div class="cta-title">
+                                Ready to Explore Your Home Loan Options?
+                            </div>
+
+                            <div class="cta-text">
+                                Discover the home loan solution that best
+                                matches your plans and take the next step
+                                toward your dream home.
+                            </div>
+
+                            <a
+                                href="https://sites.google.com/deloitte.com/xyzbank/home-loan"
+                                target="_blank"
+                                class="cta-button"
+                            >
+                                Explore Home Loan Options
+                            </a>
+
+                        </div>
+
+
+                        <!-- BENEFITS -->
+                        <div class="benefits-title">
+                            Why Choose The Bank?
+                        </div>
+
+
+                        <div class="benefit">
+                            <span class="check">✓</span>
+                            Flexible repayment tenure options
+                        </div>
+
+                        <div class="benefit">
+                            <span class="check">✓</span>
+                            Competitive interest rate options
+                        </div>
+
+                        <div class="benefit">
+                            <span class="check">✓</span>
+                            Convenient and simple application journey
+                        </div>
+
+                        <div class="benefit">
+                            <span class="check">✓</span>
+                            Support throughout your home loan journey
+                        </div>
+
+
+                        <!-- CLOSING -->
+                        <p class="closing">
+                            We look forward to helping you turn your
+                            homeownership plans into reality.
+                        </p>
+
+                        <p class="paragraph">
+                            Warm regards,<br>
+                            <strong style="color:#0b3d91;">
+                                The Bank
+                            </strong>
+                        </p>
+
+                    </td>
+                </tr>
+
+
+                <!-- FOOTER -->
+                <tr>
+                    <td class="footer">
+
+                        <div class="footer-brand">
+                            The Bank
+                        </div>
+
+                        <div class="footer-tagline">
+                            Banking made simpler. Dreams made possible.
+                        </div>
+
+                        <div class="disclaimer">
+                            Disclaimer: Home loan products, interest rates,
+                            eligibility, approval and other terms are subject
+                            to The Bank's applicable policies, credit assessment
+                            and applicable terms and conditions.
+                        </div>
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
